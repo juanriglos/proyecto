@@ -1,0 +1,2 @@
+class Temporary < Tarea
+end

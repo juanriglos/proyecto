@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Las últimas 5 listas creadas</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th>Url</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lists.each do |list| %>
+      <tr>
+        <td><%= list.created_at %></td>
+        <td><%= list.updated_at %></td>
+        <td><%= list.URL %></td>
+        <td><%= link_to 'Show', list %></td>
+        <td><%#link_to 'Edit', edit_list_path(list) %></td>
+        <td><%#link_to 'Destroy', list, method: :delete, data: { confirm: 'Esta seguro que quiere eliminar la lista?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= simple_form_for @list do |f| %>
+  <%= f.input :URL, label: 'Nueva URL', placeholder: 'Introduce el nombre de la nueva lista' %>
+  <%= f.button :submit, class: "btn-success" %>
+<% end %>

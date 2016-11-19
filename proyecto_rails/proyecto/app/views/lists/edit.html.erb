@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <h1>Modificar Lista</h1>
+  <button> <%= link_to 'Atras', lists_path,:id => 'atras' %></button>
+  <%= form_for (@list) do |l| %>
+  <fieldset>
+    <legend>Datos lista</legend>
+    <div class="field">
+      <%=l.label :nombre %>
+      <%= l.text_field :name%>
+    </div>
+  </fieldset
+  <div class="actions">
+    <%= l.submit 'Guardar cambios'%>
+  </div>
+  <% end %>
+</body>
+</html>

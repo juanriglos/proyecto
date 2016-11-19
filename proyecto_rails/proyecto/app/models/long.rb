@@ -1,0 +1,2 @@
+class Long < Tarea
+end
