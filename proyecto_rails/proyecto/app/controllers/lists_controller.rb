@@ -1,7 +1,7 @@
 class ListsController < ApplicationController
   def index
     if cookies[:user_lists].nil?
-      @lists = List.all
+      @lists = List.all.last(5)
     #  if @lists.size > 5
     #    @lists= @lists.last(5)
     #  end
