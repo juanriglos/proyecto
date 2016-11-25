@@ -1,33 +1,43 @@
 <p id="notice"><%= notice %></p>
+<h1>Vista de lista</h1>
 
-<p>
-  <strong>Created at:</strong>
-  <%= @list.created_at %>
-</p>
+<div class="panel panel-default">
 
-<p>
-  <strong>Updated at:</strong>
-  <%= @list.updated_at %>
-</p>
+  <div class="panel-heading"><strong>Nombre:</strong> <%= @list.URL %></div>
+  <div class="panel-heading"><strong>Created at:</strong> <%= @list.created_at %></div>
+  <div class="panel-heading"><strong>Updated at:</strong> <%= @list.updated_at %></div>
+  <div class="panel-heading"><strong>Link a la lista:</strong> <%= link_to "localhost:3000/lists/#{@list.friendly_id}", "localhost:3000/lists/#{@list.friendly_id}"  %></div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Estado</th>
+      <th>Descripcion</th>
+      <th>Prioridad</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @list.tareas.order(priority: :asc).each do |tarea| %>
+      <tr>
+        <td><%= tarea.type %></td>
+        <td><%= tarea.state %></td>
+        <td><%= tarea.description %></td>
+        <td><%= case tarea.priority
+                  when 1
+                     'Alta'
+                  when 2
+                     'Media'
+                  else
+                     'Baja'
+                  end%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @list.name %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @list.URL %>
-</p>
-
-<p>
-  <strong>tareas:</strong>
-  <%= @list.tareas.each do |tarea| %>
-  <%= tarea.type %>
-  <%= tarea.class %>
-  <% end  %>
-</p>
-
+<%= render "tareas/form"%>
 
 <%= link_to 'Edit', edit_list_path(@list) %> |
 <%= link_to 'Back', lists_path %>

@@ -1,0 +1,15 @@
+<div class="form-inline">
+<%= form_for([@list, @list.tareas.build]) do |f| %>
+<div class="form-group">
+  <%= f.text_field :description, placeholder: "Nueva Tarea" %>
+  <%= f.hidden_field :state, value: "Pendiente" %>
+</div>
+<div class="form-group">
+  <%= f.select :type, [['Simple','Simple'],[ 'Larga','Long'],[ 'Temporaria','Temporary']],:required => true %>
+</div>
+<div class="form-group">
+  <%= f.select( :priority, [['Alta','1'],[ 'Media','2'],[ 'Baja','3']]) %>
+</div>
+<%= f.submit class: "btn btn-success"%>
+<%end %>
+<div>

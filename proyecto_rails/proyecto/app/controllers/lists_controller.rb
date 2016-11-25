@@ -1,12 +1,21 @@
 class ListsController < ApplicationController
   def index
-    @lists = List.all
+    if cookies[:user_lists].nil?
+      @lists = List.all
+    #  if @lists.size > 5
+    #    @lists= @lists.last(5)
+    #  end
+    else
+      ids = cookies[:user_lists].split("&")
+      @lists = List.all.find(ids).last(5).reverse
+    #  Rails.logger.debug @Lists
+    end
     @list = List.new
-    @list.tareas.build
   end
 
   def show
     @list=List.friendly.find(params[:id])
+    @tareas=@list.tareas.all
   end
 
 
@@ -18,6 +27,7 @@ class ListsController < ApplicationController
   def edit
     @list=List.friendly.find(params[:id])
     @tareas=@list.tareas.all
+
   end
 
   def update
@@ -26,36 +36,18 @@ class ListsController < ApplicationController
 		redirect_to edit_list_path
   end
 
-  def agregar id_lista
-    if cookies[:user_lists].nil?
-      cookies[:user_lists]=Array.new
-      cookies[:user_lists].push(id_lista)
-    else
-      # en caso de ser necesario .gsub('+', ' ')
-      arreglo = cookies[:user_lists].split("&")
-      Rails.logger.debug arreglo
-      arreglo.push(id_lista)
-      cookies[:user_lists] = arreglo
-    end
-  end
-
   def create
-
     @list = List.new(list_params)
-
-    Rails.logger.debug list_params[:URL]
-    agregar list_params[:URL]
     #en caso de crear con tarea @list.tareas.new(tarea_params)
-
    respond_to do |format|
       if @list.save
+        agregar @list.id
         format.html { redirect_to @list, notice: 'Lista satisfactoriamente creada.' }
       else
         format.html { redirect_to @list, notice: 'El nombre de la lista ya existe' }
       end
     end
   end
-
 
   private
 
@@ -69,6 +61,18 @@ class ListsController < ApplicationController
     end
 
     def tarea_params
-		params.require(:tareas).permit(:type, :description)
-	end
+		    params.require(:tarea).permit(:description)
+	  end
+
+    def agregar id_lista
+      if cookies[:user_lists].nil?
+        cookies[:user_lists]=Array.new
+        cookies[:user_lists].push(id_lista)
+      else
+      # en caso de ser necesario .gsub('+', ' ')
+        arreglo = cookies[:user_lists].split("&")
+        arreglo.push(id_lista)
+        cookies[:user_lists] = arreglo
+      end
+    end
 end
