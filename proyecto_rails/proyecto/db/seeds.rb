@@ -5,4 +5,5 @@ List.create! [
 { name: 'Lista varios', URL:'varios' },
 { name: 'Lista vieja', URL:'vieja' },
 { name: 'Lista pruebas', URL:'pruebas' },
+{ name: 'Lista otras', URL:'otra' },
 ]
