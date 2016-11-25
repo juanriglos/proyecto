@@ -4,4 +4,5 @@ List.create! [
 { name: 'Lista supermercado', URL:'supermercado' },
 { name: 'Lista varios', URL:'varios' },
 { name: 'Lista vieja', URL:'vieja' },
+{ name: 'Lista pruebas', URL:'pruebas' },
 ]
