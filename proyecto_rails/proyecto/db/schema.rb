@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125143336) do
+ActiveRecord::Schema.define(version: 20161126033807) do
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -41,6 +41,9 @@ ActiveRecord::Schema.define(version: 20161125143336) do
     t.integer  "priority"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "begin_time"
+    t.datetime "end_time"
+    t.integer  "percentage"
   end
 
 end

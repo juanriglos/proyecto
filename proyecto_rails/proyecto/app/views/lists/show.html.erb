@@ -20,6 +20,7 @@
   <tbody>
     <% @list.tareas.order(priority: :asc).each do |tarea| %>
       <tr>
+        <%#  Date.today.between?(Date.yesterday, Date.tomorrow)%>
         <td><%= tarea.type %></td>
         <td><%= tarea.state %></td>
         <td><%= tarea.description %></td>
