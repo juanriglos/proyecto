@@ -11,7 +11,14 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
+//= require underscore
+//= require dependent-fields
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(document).ready(function() {
+    DependentFields.bind()
+});
