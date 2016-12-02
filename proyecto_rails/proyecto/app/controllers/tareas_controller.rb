@@ -13,7 +13,7 @@ private
   end
 
   def tarea_params
-		params.require(:tarea).permit(:description, :type, :priority, :state)
+		params.require(:tarea).permit(:description, :type, :priority, :state,:begin_time, :end_time, :percentage)
 	end
 
 end
