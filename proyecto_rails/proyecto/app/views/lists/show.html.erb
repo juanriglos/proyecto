@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+
 <h1>Vista de lista</h1>
 
 <div class="panel panel-default">
@@ -10,10 +11,14 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Tipo</th>
+      <th>Prioridad</th>
       <th>Estado</th>
       <th>Descripcion</th>
-      <th>Prioridad</th>
+      <th>Tipo</th>
+      <th>Fecha Inicio</th>
+      <th>Fecha Fin</th>
+      <th>Porcentaje</th>
+      <th>Acciones</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -21,9 +26,6 @@
     <% @list.tareas.order(priority: :asc).each do |tarea| %>
       <tr>
         <%#  Date.today.between?(Date.yesterday, Date.tomorrow)%>
-        <td><%= tarea.type %></td>
-        <td><%= tarea.state %></td>
-        <td><%= tarea.description %></td>
         <td><%= case tarea.priority
                   when 1
                      'Alta'
@@ -32,6 +34,25 @@
                   else
                      'Baja'
                   end%></td>
+        <td><%= tarea.state %></td>
+        <td><%= tarea.description %></td>
+        <td><%= tarea.type %></td>
+
+        <td><%= if tarea.begin_time
+          l tarea.begin_time, :format => :short
+        end%></td>
+        <td><%= if tarea.end_time
+        l tarea.end_time, :format => :short end%></td>
+        <td><%= if !tarea.percentage.nil?
+              progress_bar tarea.percentage.to_f/100 ,alternative: 'success', striped: true, active: true, label: true, style: 'min-width: 20px' end %></td>
+        <td>
+          <%= link_to edit_list_tarea_path(@list,tarea), class: "btn btn-default" do %>
+              <i class="glyphicon glyphicon-edit"></i>
+          <% end %>
+        <%= link_to list_tarea_path(@list,tarea),method: :delete, data: { confirm: 'Esta seguro que quiere eliminar la tarea?' }, class: "btn btn-default" do %>
+            <i class="glyphicon glyphicon-trash"></i>
+        <% end %></td>
+
       </tr>
     <% end %>
   </tbody>

@@ -3,7 +3,7 @@ validates :URL, uniqueness:true
 validates :URL, presence:true
 
 
-  has_many :tareas
+  has_many :tareas, dependent: :destroy
 
   extend FriendlyId
   friendly_id :URL, use: :slugged
