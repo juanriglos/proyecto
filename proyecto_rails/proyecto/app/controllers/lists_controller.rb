@@ -16,12 +16,7 @@ class ListsController < ApplicationController
   def show
     @list=List.friendly.find(params[:id])
     @tareas=@list.tareas.all
-    @debug=@tareas.find_by_type ('Temporary')
 
-
-    Rails.logger.debug @tareas
-    Rails.logger.debug 'medio mdio medio'
-      Rails.logger.debug @tareas.where(type: Temporary)
   end
 
 

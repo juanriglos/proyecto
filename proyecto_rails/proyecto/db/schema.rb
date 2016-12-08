@@ -10,32 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161127201036) do
-
-  create_table "dogs", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
-    t.string   "sluggable_type", limit: 50
-    t.string   "scope"
-    t.datetime "created_at"
-    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
-  end
+ActiveRecord::Schema.define(version: 20161126033807) do
 
   create_table "lists", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "name"
     t.string   "URL"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "slug"
     t.index ["slug"], name: "index_lists_on_slug"
   end
@@ -51,6 +32,7 @@ ActiveRecord::Schema.define(version: 20161127201036) do
     t.datetime "begin_time"
     t.datetime "end_time"
     t.integer  "percentage"
+    t.index ["list_id"], name: "index_tareas_on_list_id"
   end
 
 end
