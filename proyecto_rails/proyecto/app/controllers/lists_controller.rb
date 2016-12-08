@@ -1,7 +1,7 @@
 class ListsController < ApplicationController
   def index
     if cookies[:user_lists].nil?
-      @lists = List.all.last(5)
+      @lists = List.none
     #  if @lists.size > 5
     #    @lists= @lists.last(5)
     #  end
@@ -58,7 +58,7 @@ class ListsController < ApplicationController
   private
 
     def list_params_to_update
-		    list_params.permit(:name)
+		    list_params.permit(:URL)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

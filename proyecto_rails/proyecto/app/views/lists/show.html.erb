@@ -4,8 +4,8 @@
 <div class="panel panel-default">
 
   <div class="panel-heading"><strong>Nombre:</strong> <%= @list.URL %></div>
-  <div class="panel-heading"><strong>Created at:</strong> <%= l @list.created_at %></div>
-  <div class="panel-heading"><strong>Updated at:</strong> <%= l @list.updated_at %></div>
+  <div class="panel-heading"><strong>Creada el:</strong> <%= l @list.created_at %></div>
+  <div class="panel-heading"><strong>Modificada el:</strong> <%= l @list.updated_at %></div>
   <div class="panel-heading"><strong>Link a la lista:</strong> <%= link_to "localhost:3000/lists/#{@list.friendly_id}", "localhost:3000/lists/#{@list.friendly_id}"  %></div>
 <table class="table">
   <thead>
