@@ -7,10 +7,18 @@
   <h1>Modificar Tarea</h1>
   <%= link_to 'Atras', list_path(@list) %>
 
-  <%= simple_form_for @tarea.becomes(Tarea), url: edit_list_tarea_path , method: :get do |t| %>
+  <%= simple_form_for @tarea.becomes(Tarea), url: list_tarea_path , method: :put do |t| %>
+  <%= hidden_field_tag t.object = @tarea.becomes(@tarea.class) %>
   <%= t.input :description, label: 'Cambiar Descripción', placeholder: :description %>
+  <%= t.select( :priority, [['Alta','1'],[ 'Media','2'],[ 'Baja','3']])%>
+    <% if t.object.class == Long %>
+    <%= t.select(:state, [['Pendiente'],['En Curso'],['Hecha']])%>
+    <% elsif t.object.class == Temporary %>
+    <%= t.select(:state, [['Pendiente'],['Hecha'],['Expirada']])%>
+    <% else%>
+    <%= t.select(:state, [['Pendiente'],['Hecha']])%>
+    <% end%>
   <%= t.button :submit, class: "btn-success" %>
-
   <% end %>
 
 </body>

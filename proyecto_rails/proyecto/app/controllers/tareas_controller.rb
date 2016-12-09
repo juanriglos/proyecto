@@ -18,12 +18,9 @@ def edit
 end
 
 def update
-  raise "error"
-    Rails.logger.debug "ENTRA AL UPDATE"
     @tarea=@list.tareas.find(params[:id])
     respond_to do |format|
     if @tarea.update(tarea_params_to_update)
-      Rails.logger.debug 'HACE EL UPDATE'
       format.html { redirect_to @list, notice: 'Tarea  modificada.'}
     else
       format.html { redirect_to @list, notice: 'La Tarea no se pudo modificar.'}
@@ -47,7 +44,7 @@ end
 private
 
   def tarea_params_to_update
-      tarea_params.permit(:description)
+      tarea_params.permit(:description,:priority,:state,:percentage,:begin_time,:end_time)
   end
 
   def set_todo_list

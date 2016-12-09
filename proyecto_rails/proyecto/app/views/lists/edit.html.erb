@@ -5,7 +5,7 @@
 </head>
 <body>
   <h1>Modificar Nombre Lista</h1>
-            <%= link_to 'Atras', list_path(@list) %>
+  <%= link_to 'Atras', list_path(@list) %>
 
   <%= simple_form_for @list do |f| %>
     <%= f.input :URL, label: 'Cambiar Nombre', placeholder: :URL %>
