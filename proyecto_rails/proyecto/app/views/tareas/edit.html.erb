@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <h1>Modificar Tarea</h1>
+  <%= link_to 'Atras', list_path(@list) %>
+
+  <%= simple_form_for @tarea.becomes(Tarea), url: edit_list_tarea_path , method: :get do |t| %>
+  <%= t.input :description, label: 'Cambiar Descripción', placeholder: :description %>
+  <%= t.button :submit, class: "btn-success" %>
+
+  <% end %>
+
+</body>
+</html>

@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :dogs
-  root to: 'lists#index'
-
   resources :lists do
     resources :tareas
   end
