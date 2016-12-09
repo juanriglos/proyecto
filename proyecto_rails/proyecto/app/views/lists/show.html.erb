@@ -24,7 +24,18 @@
   </thead>
   <tbody>
     <% @list.tareas.order(priority: :asc).each do |tarea| %>
-      <tr>
+    <% if tarea.end_time
+            if tarea.end_time< Date.today
+      tarea.state = 'Expirada' %>
+      <% end %>
+      <% end %>
+    <% if tarea.state == 'Hecha' %>
+         <tr class="success">
+      <% elsif tarea.state == 'Expirada' %>
+        <tr class="danger">
+      <% else %>
+        <tr>
+        <% end %>
         <%#  Date.today.between?(Date.yesterday, Date.tomorrow)%>
         <td><%= case tarea.priority
                   when 1
