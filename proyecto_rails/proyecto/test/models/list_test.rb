@@ -63,8 +63,6 @@ class ListTest < ActiveSupport::TestCase
     @controller.instance_eval{ cambia_estado tarea }
     assert_equal('Expirada', tarea.state, 'anduvo bien')
 
-
-
   end
 
   test "Devuelve las tareas ordenadas por prioridad" do
@@ -81,6 +79,20 @@ class ListTest < ActiveSupport::TestCase
     end
     lista_prioridad = lista.tareas.order(priority: :asc)
     assert_equal([tarea_larga, tarea_simple, tarea_temporaria], lista_prioridad, 'Quedo mal el ORDEN')
+  end
+
+  test "actualizacion de una tarea larga con porcentaje dentro del rango" do
+    lista = List.new
+    lista.URL = 'prueba'
+    tarea = Tarea.create(type:'Long',description: 'Feed the wombat', priority: 3,percentage: 50, state:'Pendiente')
+    tarea.update(percentage: 60)
+    lista.tareas << tarea
+
+    assert_equal(60, tarea.percentage, 'anduvo bien')
+  end
+
+  test "actualizacion de una tarea larga con porcentaje fuera del rango" do
+
   end
 
 

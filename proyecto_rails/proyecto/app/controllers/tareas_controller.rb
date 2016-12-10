@@ -44,9 +44,11 @@ end
 
 private
   def cambia_estado tarea
-    if tarea.end_time< Date.today
-      tarea.state = 'Expirada'
-    end
+    if tarea.type == 'Temporary'
+      if tarea.end_time< Date.today
+        tarea.state = 'Expirada'
+      end
+  end
   end
 
   def tarea_params_to_update
