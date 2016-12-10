@@ -19,6 +19,7 @@ end
 
 def update
     @tarea=@list.tareas.find(params[:id])
+    cambia_estado @tarea
     respond_to do |format|
     if @tarea.update(tarea_params_to_update)
       format.html { redirect_to @list, notice: 'Tarea  modificada.'}
@@ -42,6 +43,11 @@ end
 
 
 private
+  def cambia_estado tarea
+    if tarea.end_time< Date.today
+      tarea.state = 'Expirada'
+    end
+  end
 
   def tarea_params_to_update
       tarea_params.permit(:description,:priority,:state,:percentage,:begin_time,:end_time)

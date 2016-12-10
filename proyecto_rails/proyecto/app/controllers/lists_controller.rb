@@ -22,8 +22,6 @@ class ListsController < ApplicationController
 
   def destroy
     @list=List.friendly.find(params[:id])
-    Rails.logger.debug @list.id
-    Rails.logger.debug 'ABAJO'
     eliminar @list.id
     List.friendly.find(params[:id]).destroy
     redirect_to lists_url

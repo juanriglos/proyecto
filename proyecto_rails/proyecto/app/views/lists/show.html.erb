@@ -24,11 +24,11 @@
   </thead>
   <tbody>
     <% @list.tareas.order(priority: :asc).each do |tarea| %>
-    <% if tarea.end_time
+    <!-- <% if tarea.end_time
             if tarea.end_time< Date.today
       tarea.state = 'Expirada' %>
       <% end %>
-      <% end %>
+      <% end %> -->
     <% if tarea.state == 'Hecha' %>
          <tr class="success">
       <% elsif tarea.state == 'Expirada' %>
