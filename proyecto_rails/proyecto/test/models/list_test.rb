@@ -59,8 +59,11 @@ class ListTest < ActiveSupport::TestCase
     tarea.update(begin_time: Date.yesterday, end_time: Date.yesterday)
     lista.tareas << tarea
 
-
+    @controller = TareasController.new
+    @controller.instance_eval{ cambia_estado tarea }
     assert_equal('Expirada', tarea.state, 'anduvo bien')
+
+
 
   end
 
@@ -79,5 +82,6 @@ class ListTest < ActiveSupport::TestCase
     lista_prioridad = lista.tareas.order(priority: :asc)
     assert_equal([tarea_larga, tarea_simple, tarea_temporaria], lista_prioridad, 'Quedo mal el ORDEN')
   end
+
 
 end
