@@ -8,19 +8,25 @@
       <th>Creada el</th>
       <th>Modificada el</th>
       <th>Url</th>
-      <th colspan="3"></th>
+      <th>Vista|Modificar|Borrar</th>
     </tr>
   </thead>
 
   <tbody>
     <% @lists.each do |list| %>
       <tr>
-        <td><%= list.created_at %></td>
-        <td><%= list.updated_at %></td>
+        <td><%= l list.created_at %></td>
+        <td><%= l list.updated_at %></td>
         <td><%= list.URL %></td>
-        <td><%= link_to 'Show', list %></td>
-        <td><%#link_to 'Edit', edit_list_path(list) %></td>
-        <td><%#link_to 'Destroy', list, method: :delete, data: { confirm: 'Esta seguro que quiere eliminar la lista?' } %></td>
+        <td><%= link_to list_path(list), class: "btn btn-default" do%>
+          <i class="glyphicon glyphicon-search"></i>
+            <% end %>
+          <%= link_to edit_list_path(list), class: "btn btn-default" do %>
+              <i class="glyphicon glyphicon-edit"></i>
+          <% end %>
+        <%= link_to list_path(list),method: :delete, data: { confirm: 'Esta seguro que quiere eliminar la Lista?' }, class: "btn btn-default" do %>
+            <i class="glyphicon glyphicon-trash"></i>
+        <% end %></td>
       </tr>
     <% end %>
   </tbody>

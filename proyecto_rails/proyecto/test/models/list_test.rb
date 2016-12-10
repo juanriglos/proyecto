@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class ListTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  def test_the_truth
+    assert true
+  end
+
 end

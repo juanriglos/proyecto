@@ -21,6 +21,10 @@ class ListsController < ApplicationController
 
 
   def destroy
+    @list=List.friendly.find(params[:id])
+    Rails.logger.debug @list.id
+    Rails.logger.debug 'ABAJO'
+    eliminar @list.id
     List.friendly.find(params[:id]).destroy
     redirect_to lists_url
   end
@@ -45,7 +49,7 @@ class ListsController < ApplicationController
         agregar @list.id
         format.html { redirect_to @list, notice: 'Lista satisfactoriamente creada.' }
       else
-        format.html { redirect_to @list, notice: 'El nombre de la lista ya existe' }
+        format.html { redirect_to @list, notice: 'La lista no se pudo crear' }
       end
     end
   end
@@ -76,4 +80,14 @@ class ListsController < ApplicationController
         cookies[:user_lists] = arreglo
       end
     end
+
+    def eliminar id_lista
+      arreglo = cookies[:user_lists].split("&")
+      Rails.logger.debug arreglo
+      Rails.logger.debug 'DESPUES DE ARREGLO'
+      arreglo.delete(id_lista.to_s)
+      Rails.logger.debug arreglo
+      cookies[:user_lists] = arreglo
+    end
+
 end
