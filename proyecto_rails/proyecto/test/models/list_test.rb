@@ -21,15 +21,18 @@ class ListTest < ActiveSupport::TestCase
     task_list.URL = 'Test url'
 
     simple_task = Tarea.create(type:'Simple', description: 'Clean garage', priority: 2)
-    temporary_task = Tarea.create(type:'Temporary',description: 'Feed the wombat', priority: 3, begin_time: Date.today, end_time: Date.tomorrow)
-    long_task = Tarea.create(type:'Long', description: 'Shop for groceries', priority: 1)
+    temporary_task = Tarea.create(type:'Temporary',begin_time: Date.today, end_time: Date.tomorrow ,description: 'Feed the wombat', priority: 3, begin_time: Date.today, end_time: Date.tomorrow)
+    long_task = Tarea.create(type:'Long',percentage: 50, description: 'Shop for groceries', priority: 1)
+    #
+    # task_list.tareas << simple_task
+    # task_list.tareas << long_task
+    # task_list.tareas << temporary_task
 
-    [simple_task, temporary_task, long_task].each do |task|
+    [simple_task, long_task, temporary_task ].each do |task|
       task_list.tareas << task
       task_list.save
     end
-    lista_prioridad = task_list.tareas.order(priority: :desc)
-
+    lista_prioridad = task_list.tareas.order(priority: :asc)
     assert_equal([long_task, simple_task, temporary_task], lista_prioridad, 'Wrong order!')
   end
 
