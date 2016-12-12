@@ -1,6 +1,6 @@
 
 lista = List.create({
-  URL:'Lista terminado',
+  URL:'Lista 0',
   created_at:Date.today,
   updated_at:Date.today
   })
