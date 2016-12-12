@@ -1,0 +1,42 @@
+
+
+<table class="table">
+  <tr>
+    <th class="success">Descripcion</th>
+    <th class="success">Tipo</th>
+    <th class="success">Prioridad</th>
+    <th class="success"> </th>
+  </tr>
+
+
+  <tr>
+    <td>
+<%= simple_form_for([@list, @list.tareas.build]) do |f| %>
+<div class="form-group">
+  <%= f.text_field :description, placeholder: "Escriba desripcion para nueva Tarea",class:"form-control" %>
+  <%= f.hidden_field :state, value: "Pendiente" %>
+</div>
+</td>
+<td>
+<div class="form-group">
+  <%= f.select :type, [['Simple','Simple'],[ 'Larga','Long'],[ 'Temporaria','Temporary']],:required => true%><br>
+  <%= content_tag :div, class: 'js-dependent-fields', data: {'select-id': 'tarea_type', 'option-value': 'Temporary'} do %>
+    <%= f.date_field :begin_time, min: Date.today%><br>
+    <%= f.date_field :end_time, min: Date.today%>
+  <% end %>
+  <%= content_tag :div, class: 'js-dependent-fields', data: {'select-id': 'tarea_type', 'option-value': 'Long'} do %>
+    <%= f.input :percentage, input_html: { min: 0, max: 100} %><br>
+  <% end %>
+</div>
+</td>
+<td>
+<div class="form-group">
+  <%= f.select( :priority, [['Alta','1'],[ 'Media','2'],[ 'Baja','3']]) %>
+</div>
+</td>
+<td>
+  <%= f.submit class: "btn btn-success"%>
+  <% end %>
+</td>
+
+</table>

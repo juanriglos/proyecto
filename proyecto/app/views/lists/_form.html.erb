@@ -1,0 +1,53 @@
+<%= form_for(list) do |f| %>
+  <% if list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(list.errors.count, "error") %> prohibited this list from being saved:</h2>
+
+      <ul>
+      <% list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :URL %>
+    <%= f.text_field :URL %>
+    
+  </div>
+
+  <div class="field">
+    <%= f.label :created_at %>
+    <%= f.datetime_select :created_at %>
+  </div>
+
+  <div class="field">
+    <%= f.label :updated_at %>
+    <%= f.datetime_select :updated_at %>
+  </div>
+
+
+  <legend>Datos de tarea</legend>
+  		<%= fields_for :tareas do |t| %>
+      		<div class='field'>
+      		<%= t.label :tipo_de_tarea %><br>
+      		<%= t.select :type, [['Simple','Simple'],[ 'Temporal','Temporary'],['Larga','Long']],:required => true  %> <br>
+      		</div>
+      		<div class='field'>
+      		<%= t.label :forma_de_descripcion %><br>
+      		<%= t.text_field :description ,placeholder:"Ingrese una descripcion",:required => true %>
+      		</div>
+      	<% end %>
+      	</fieldset>
+
+  		<div class='actions'>
+  		<%= f.submit %>
+  		</div>
+
+<% end %>
