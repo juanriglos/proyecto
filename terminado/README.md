@@ -9,6 +9,8 @@ Posicionados en el directorio terminado ejecutar en linea de comando
 ```
 Para ejecutar la aplicacion ingresar en el navegador a localhost:3000
 
+Para acceder a la lista de prueba: http://localhost:3000/lists/lista-0
+
 #Tests
 
 Para testear los modelos ejecutar en linea de comando
