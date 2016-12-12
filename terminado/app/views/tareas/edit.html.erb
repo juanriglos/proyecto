@@ -15,7 +15,7 @@
   <label>Estado</label>
     <% if t.object.class == Long %>
     <%= t.select(:state, [['Pendiente'],['En Curso'],['Hecha']])%>
-    <label>Porcentaje</label><%= t.input :percentage, input_html: { min: 0, max: 100} %>
+    <%= t.input :percentage, input_html: { min: 0, max: 100} %>
     <% else %>
     <%= t.select(:state, [['Pendiente'],['Hecha']])%>
     <% end%>
