@@ -1,0 +1,470 @@
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "lists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar, "URL" varchar, "slug" varchar)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX "index_lists_on_slug" ON "lists" ("slug")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "tareas" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "list_id" integer, "type" varchar, "description" varchar, "state" varchar, "priority" integer, "created_at" datetime, "updated_at" datetime, "begin_time" datetime, "end_time" datetime, "percentage" integer)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX "index_tareas_on_list_id" ON "tareas" ("list_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES ('20161126033807')[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO schema_migrations (version) VALUES ('20161125133708'), ('20161125134353'), ('20161125134648'), ('20161125143336'), ('20161126032557');
+
+[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (1.4ms)[0m  [1m[31mDELETE FROM "lists"[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "tareas"[0m
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+ListTest: test_Debe_guardar_una_lista_con_datos_de_URL
+------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "funca"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "funca"], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["URL", "funca"], ["slug", "funca"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------
+ListTest: test_No_debe_guardar_si_la_URL_ya_existe
+--------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba url"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["URL", "prueba url"], ["slug", "prueba-url"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba url"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+ListTest: test_no_debe_guardar_una_Lista_sin_nombre
+---------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_fuera_del_rango_(110)
+-------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "holalalala"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["percentage", 50]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------
+TareaTest: test_El_pasaje_de_una_tarea_temporal_a_estado_Expirada
+-----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-12 00:00:00 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+TareaTest: test_crear_tarea_datos_VALIDOS,_tipo_y_belong-to_list
+----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "la-lista-necesita-una-url-para-ser-valida"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "la lista necesita una URL para ser valida"], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["URL", "la lista necesita una URL para ser valida"], ["slug", "la-lista-necesita-una-url-para-ser-valida"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Simple"], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------------------------
+TareaTest: test_Creacion_de_una_tarea_temporal_con_un_rango_de_validez_invalido
+-------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_fuera_del_rango_(-1)
+------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "holalalala"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------
+TareaTest: test_No_debe_guardar_una_tarea_sin_ningun_dato
+---------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------------------
+TareaTest: test_Creacion_de_una_tarea_temporal_con_un_rango_de_validez_VALIDO
+-----------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["priority", 3], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-14 00:00:00 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba"], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["URL", "prueba"], ["slug", "prueba"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:21:02 UTC], ["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------
+TareaTest: test_Devuelve_las_tareas_ordenadas_por_prioridad
+-----------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["type", "Simple"], ["description", "algo en la descripcion"], ["priority", 2], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["priority", 3], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-14 00:00:00 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "algo en la descripcion"], ["priority", 1], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["percentage", 50]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "test-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "Test url"], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["URL", "Test url"], ["slug", "test-url"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:21:02 UTC], ["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:21:02 UTC], ["id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Test url"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:21:02 UTC], ["id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Test url"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_dentro_del_rango
+--------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "algo en la descripcion"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:21:02 UTC], ["updated_at", 2016-12-13 01:21:02 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "updated_at" = ?, "percentage" = ? WHERE "tareas"."id" = ?[0m  [["updated_at", 2016-12-13 01:21:02 UTC], ["percentage", 60], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (2.1ms)[0m  [1m[31mDELETE FROM "lists"[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "tareas"[0m
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+ListTest: test_Debe_guardar_una_lista_con_datos_de_URL
+------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "funca"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "funca"], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["URL", "funca"], ["slug", "funca"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------
+ListTest: test_No_debe_guardar_si_la_URL_ya_existe
+--------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba url"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["URL", "prueba url"], ["slug", "prueba-url"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba url"], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+ListTest: test_no_debe_guardar_una_Lista_sin_nombre
+---------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_fuera_del_rango_(110)
+-------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "holalalala"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------
+TareaTest: test_Devuelve_las_tareas_ordenadas_por_prioridad
+-----------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["type", "Simple"], ["description", "algo en la descripcion"], ["priority", 2], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["priority", 3], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-14 00:00:00 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "algo en la descripcion"], ["priority", 1], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["percentage", 50]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "test-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "Test url"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["URL", "Test url"], ["slug", "test-url"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:22:14 UTC], ["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:22:14 UTC], ["id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Test url"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:22:14 UTC], ["id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Test url"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTarea Load (0.1ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+TareaTest: test_crear_tarea_datos_VALIDOS,_tipo_y_belong-to_list
+----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "la-lista-necesita-una-url-para-ser-valida"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "la lista necesita una URL para ser valida"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["URL", "la lista necesita una URL para ser valida"], ["slug", "la-lista-necesita-una-url-para-ser-valida"]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Simple"], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------------------
+TareaTest: test_Creacion_de_una_tarea_temporal_con_un_rango_de_validez_VALIDO
+-----------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["priority", 3], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-14 00:00:00 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["URL", "prueba"], ["slug", "prueba"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:22:14 UTC], ["id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_fuera_del_rango_(-1)
+------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "holalalala"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------
+TareaTest: test_El_pasaje_de_una_tarea_temporal_a_estado_Expirada
+-----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-12 00:00:00 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------------------------
+TareaTest: test_Creacion_de_una_tarea_temporal_con_un_rango_de_validez_invalido
+-------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------
+TareaTest: test_No_debe_guardar_una_tarea_sin_ningun_dato
+---------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_dentro_del_rango
+--------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "algo en la descripcion"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:22:14 UTC], ["updated_at", 2016-12-13 01:22:14 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "tareas" SET "updated_at" = ?, "percentage" = ? WHERE "tareas"."id" = ?[0m  [["updated_at", 2016-12-13 01:22:14 UTC], ["percentage", 60], ["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (1.5ms)[0m  [1m[31mDELETE FROM "lists"[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "tareas"[0m
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+ListTest: test_Debe_guardar_una_lista_con_datos_de_URL
+------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "funca"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "funca"], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["URL", "funca"], ["slug", "funca"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------
+ListTest: test_No_debe_guardar_si_la_URL_ya_existe
+--------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba url"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["URL", "prueba url"], ["slug", "prueba-url"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba url"], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+ListTest: test_no_debe_guardar_una_Lista_sin_nombre
+---------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_dentro_del_rango
+--------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "algo en la descripcion"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (9.8ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "tareas" SET "updated_at" = ?, "percentage" = ? WHERE "tareas"."id" = ?[0m  [["updated_at", 2016-12-13 01:24:17 UTC], ["percentage", 60], ["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------------
+TareaTest: test_No_debe_guardar_una_tarea_sin_ningun_dato
+---------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_fuera_del_rango_(110)
+-------------------------------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "holalalala"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["percentage", 50]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------------------------------------
+TareaTest: test_actualizacion_de_una_tarea_larga_con_porcentaje_fuera_del_rango_(-1)
+------------------------------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "holalalala"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["percentage", 50]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------------------------------
+TareaTest: test_Creacion_de_una_tarea_temporal_con_un_rango_de_validez_invalido
+-------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+TareaTest: test_crear_tarea_datos_VALIDOS,_tipo_y_belong-to_list
+----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "la-lista-necesita-una-url-para-ser-valida"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "la lista necesita una URL para ser valida"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["URL", "la lista necesita una URL para ser valida"], ["slug", "la-lista-necesita-una-url-para-ser-valida"]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Simple"], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------
+TareaTest: test_Devuelve_las_tareas_ordenadas_por_prioridad
+-----------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["type", "Simple"], ["description", "algo en la descripcion"], ["priority", 2], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["priority", 3], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-14 00:00:00 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?)[0m  [["type", "Long"], ["description", "algo en la descripcion"], ["priority", 1], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["percentage", 50]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "test-url"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "Test url"], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["URL", "Test url"], ["slug", "test-url"]]
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:24:17 UTC], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:24:17 UTC], ["id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Test url"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:24:17 UTC], ["id", 2]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Test url"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------------------
+TareaTest: test_Creacion_de_una_tarea_temporal_con_un_rango_de_validez_VALIDO
+-----------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["priority", 3], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-14 00:00:00 UTC]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "prueba"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "prueba"], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["URL", "prueba"], ["slug", "prueba"]]
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "list_id" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["list_id", 1], ["updated_at", 2016-12-13 01:24:17 UTC], ["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------
+TareaTest: test_El_pasaje_de_una_tarea_temporal_a_estado_Expirada
+-----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("type", "description", "state", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["type", "Temporary"], ["description", "algo en la descripcion"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-13 01:24:17 UTC], ["updated_at", 2016-12-13 01:24:17 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-12 00:00:00 UTC]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "tareas" SET "updated_at" = ?, "begin_time" = ?, "end_time" = ? WHERE "tareas"."id" = ?[0m  [["updated_at", 2016-12-13 01:24:17 UTC], ["begin_time", 2016-11-13 01:24:17 UTC], ["end_time", 2016-11-13 01:24:17 UTC], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
