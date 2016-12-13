@@ -1,6 +1,6 @@
 #TODO List
 
-Posicionados en el directorio terminado ejecutar en linea de comando
+Posicionados en el directorio proyecto ejecutar en linea de comando
 ```
  bundle install
  bundle exec rake db:migrate
