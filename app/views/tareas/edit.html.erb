@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <h1>Modificar Tarea</h1>
+  <%= link_to 'Atras', list_path(@list) %>
+
+  <%= simple_form_for @tarea.becomes(Tarea), url: list_tarea_path , method: :put do |t| %>
+  <%= hidden_field_tag t.object = @tarea.becomes(@tarea.class) %>
+  <%= t.input :description, label: 'Cambiar Descripción', placeholder: :description %>
+  <label>Prioridad</label>
+  <%= t.select( :priority, [['Alta','1'],[ 'Media','2'],[ 'Baja','3']])%>
+  <label>Estado</label>
+    <% if t.object.class == Long %>
+    <%= t.select(:state, [['Pendiente'],['En Curso'],['Hecha']])%>
+    <%= t.input :percentage, input_html: { min: 0, max: 100} %>
+    <% else %>
+    <%= t.select(:state, [['Pendiente'],['Hecha']])%>
+    <% end%>
+    <% if t.object.class == Temporary %>
+    <%= content_tag :div, class: 'js-dependent-fields', data: {'select-id': 'tarea_type', 'option-value': 'Temporary'} do %>
+    <label>Fecha Inicio </label>  <%= t.date_field :begin_time, min: Date.today%>
+    <label>Fecha Fin </label>     <%= t.date_field :end_time, min: Date.today%>
+      <% end %>
+      <% end %>
+  <%= t.button :submit, class: "btn-success" %>
+  <% end %>
+
+</body>
+</html>

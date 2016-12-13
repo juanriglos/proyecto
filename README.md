@@ -1,4 +1,3 @@
-
 #TODO List
 
 Posicionados en el directorio terminado ejecutar en linea de comando

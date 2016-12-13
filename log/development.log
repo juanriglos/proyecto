@@ -1,0 +1,475 @@
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddList (20161125133708)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "lists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar, "URL" varchar)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20161125133708"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateTareas (20161125134353)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "tareas" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "list_id" integer, "type" varchar, "description" varchar, "state" varchar, "priority" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_tareas_on_list_id" ON "tareas" ("list_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20161125134353"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddDetailsToTareas (20161125134648)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "tareas" ADD "created_at" datetime[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "tareas" ADD "updated_at" datetime[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20161125134648"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddSlugToLists (20161125143336)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "lists" ADD "slug" varchar[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_lists_on_slug" ON "lists" ("slug")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20161125143336"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddBeginendToTarea (20161126032557)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "tareas" ADD "begin_time" datetime[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "tareas" ADD "end_time" datetime[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20161126032557"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddPercentageToTarea (20161126033807)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "tareas" ADD "percentage" integer[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20161126033807"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", 2016-12-12 04:10:41 UTC], ["updated_at", 2016-12-12 04:10:41 UTC]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_lists_on_slug' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_lists_on_slug' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_tareas_on_list_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_tareas_on_list_id' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mList Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE ("lists"."id" IS NOT NULL) AND "lists"."slug" = ? LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mList Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? LIMIT ?[0m  [["URL", "Lista 0"], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "lists" ("created_at", "updated_at", "URL", "slug") VALUES (?, ?, ?, ?)[0m  [["created_at", 2016-12-12 00:00:00 UTC], ["updated_at", 2016-12-12 00:00:00 UTC], ["URL", "Lista 0"], ["slug", "lista-0"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Simple"], ["description", "soy simple"], ["state", "Pendiente"], ["priority", 1], ["created_at", 2016-12-12 04:10:52 UTC], ["updated_at", 2016-12-12 04:10:52 UTC]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Simple"], ["description", "soy simple"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-12 04:10:52 UTC], ["updated_at", 2016-12-12 04:10:52 UTC]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Temporary"], ["description", "soy temporal"], ["state", "Pendiente"], ["priority", 2], ["created_at", 2016-12-12 04:10:52 UTC], ["updated_at", 2016-12-12 04:10:52 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-13 00:00:00 UTC]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at", "begin_time", "end_time") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Temporary"], ["description", "soy temporal"], ["state", "Pendiente"], ["priority", 1], ["created_at", 2016-12-12 04:10:52 UTC], ["updated_at", 2016-12-12 04:10:52 UTC], ["begin_time", 2016-12-12 00:00:00 UTC], ["end_time", 2016-12-13 00:00:00 UTC]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Long"], ["description", "soy larga"], ["state", "Pendiente"], ["priority", 3], ["created_at", 2016-12-12 04:10:52 UTC], ["updated_at", 2016-12-12 04:10:52 UTC], ["percentage", 50]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at", "percentage") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Long"], ["description", "soy larga"], ["state", "Pendiente"], ["priority", 1], ["created_at", 2016-12-12 04:10:52 UTC], ["updated_at", 2016-12-12 04:10:52 UTC], ["percentage", 25]]
+  [1m[35m (8.2ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/" for ::1 at 2016-12-12 01:11:05 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ListsController#index as HTML
+  Rendering lists/index.html.erb within layouts/application
+  Rendered lists/index.html.erb within layouts/application (131.7ms)
+Completed 200 OK in 5338ms (Views: 5287.0ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/lists" for ::1 at 2016-12-12 01:11:16 -0300
+Processing by ListsController#index as HTML
+  Rendering lists/index.html.erb within layouts/application
+  Rendered lists/index.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 91ms (Views: 87.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/lists/" for ::1 at 2016-12-12 01:11:17 -0300
+Processing by ListsController#index as HTML
+  Rendering lists/index.html.erb within layouts/application
+  Rendered lists/index.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 67ms (Views: 64.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:19 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (1.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (1.0ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (19.7ms)
+  Rendered lists/show.html.erb within layouts/application (109.5ms)
+Completed 200 OK in 261ms (Views: 214.5ms | ActiveRecord: 3.3ms)
+
+
+Started DELETE "/lists/lista-0/tareas/4" for ::1 at 2016-12-12 01:11:23 -0300
+Processing by TareasController#destroy as HTML
+  Parameters: {"authenticity_token"=>"icDOmZH/PQLzTDdChQbi4ESgnDi8zwbRpn58CWkZCPyoxZtjzbEsqmnz25wrwiKwfnaHYoAx8EKlRgI/bwhcaA==", "list_id"=>"lista-0", "id"=>"4"}
+  [1m[36mList Load (0.8ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[31mDELETE FROM "tareas" WHERE "tareas"."type" IN ('Temporary') AND "tareas"."id" = ?[0m  [["id", 4]]
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 18ms (ActiveRecord: 3.9ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:23 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.7ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.8ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (11.3ms)
+  Rendered lists/show.html.erb within layouts/application (27.4ms)
+Completed 200 OK in 128ms (Views: 120.7ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/lists/lista-0/edit" for ::1 at 2016-12-12 01:11:26 -0300
+Processing by ListsController#edit as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/edit.html.erb within layouts/application
+  Rendered lists/edit.html.erb within layouts/application (9.2ms)
+Completed 200 OK in 125ms (Views: 108.9ms | ActiveRecord: 0.3ms)
+
+
+Started PATCH "/lists/lista-0" for ::1 at 2016-12-12 01:11:29 -0300
+Processing by ListsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"3KRSuJxjDZNyzS3yT1VrKVlkqiPDEeNFFLxw6RkZcu/dwYfDnjEI5Ce3nPyzBBF2P6qPaa9qimzVbXLnzLgfxg==", "list"=>{"URL"=>"Lista 11"}, "commit"=>"Actualizar List", "id"=>"lista-0"}
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mList Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "lists" WHERE "lists"."URL" = ? AND ("lists"."id" != ?) LIMIT ?[0m  [["URL", "Lista 11"], ["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[33mUPDATE "lists" SET "URL" = ?, "updated_at" = ? WHERE "lists"."id" = ?[0m  [["URL", "Lista 11"], ["updated_at", 2016-12-12 04:11:29 UTC], ["id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0/edit
+Completed 302 Found in 32ms (ActiveRecord: 3.2ms)
+
+
+Started GET "/lists/lista-0/edit" for ::1 at 2016-12-12 01:11:29 -0300
+Processing by ListsController#edit as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/edit.html.erb within layouts/application
+  Rendered lists/edit.html.erb within layouts/application (15.8ms)
+Completed 200 OK in 78ms (Views: 72.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:30 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (6.1ms)
+  Rendered lists/show.html.erb within layouts/application (15.8ms)
+Completed 200 OK in 94ms (Views: 88.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/lists/lista-0/tareas/6/edit" for ::1 at 2016-12-12 01:11:32 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"6"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.4ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 6], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (13.2ms)
+Completed 200 OK in 118ms (Views: 95.8ms | ActiveRecord: 0.7ms)
+
+
+Started PUT "/lists/lista-0/tareas/6" for ::1 at 2016-12-12 01:11:35 -0300
+Processing by TareasController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"V6RmpIn/lRsZfET6WukYy6XtROeQd7RvMSfgTvQv1HFjFdOunGvYBa2w539RBJo+uHgZe+L0vpHJDQ7vevDlLg==", "#<Long:0x007feef2b64340>"=>"", "tarea"=>{"description"=>"soy larga", "priority"=>"1", "state"=>"Pendiente", "percentage"=>"90"}, "commit"=>"Actualizar Long", "list_id"=>"lista-0", "id"=>"6"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 6], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tareas" SET "percentage" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["percentage", 90], ["updated_at", 2016-12-12 04:11:35 UTC], ["id", 6]]
+  [1m[35m (8.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 24ms (ActiveRecord: 10.3ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:35 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.4ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (7.7ms)
+  Rendered lists/show.html.erb within layouts/application (17.7ms)
+Completed 200 OK in 87ms (Views: 81.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/lists/lista-0/tareas/3/edit" for ::1 at 2016-12-12 01:11:38 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"3"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 3], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (24.0ms)
+Completed 200 OK in 111ms (Views: 95.2ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/lists/lista-0/tareas/3" for ::1 at 2016-12-12 01:11:40 -0300
+Processing by TareasController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+c4SonjZZsJz9Tei8dNaZqvt+Gekk27r5pWeD5QnpXTf8UAXMThfKbULH/4fyxF8kvzEGSkzbzYtT8OBwxOFBw==", "#<Temporary:0x007feef0e72250>"=>"", "tarea"=>{"description"=>"soy temporal", "priority"=>"2", "state"=>"Hecha", "begin_time"=>"2016-12-12", "end_time"=>"2016-12-13"}, "commit"=>"Actualizar Temporary", "list_id"=>"lista-0", "id"=>"3"}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.9ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[33mUPDATE "tareas" SET "state" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["state", "Hecha"], ["updated_at", 2016-12-12 04:11:40 UTC], ["id", 3]]
+  [1m[35m (9.3ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 32ms (ActiveRecord: 11.7ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:40 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.7ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (12.9ms)
+  Rendered lists/show.html.erb within layouts/application (45.7ms)
+Completed 200 OK in 129ms (Views: 121.7ms | ActiveRecord: 1.3ms)
+
+
+Started POST "/lists/lista-0/tareas" for ::1 at 2016-12-12 01:11:45 -0300
+Processing by TareasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"mq9sxVvgLM1x8REwa9NsO4O8yLmb35pJ/waUx4ZlrAC7qjk/B649ZetO/e7FF6xruWrT46chbNr8PurxgHT4lA==", "tarea"=>{"description"=>"", "state"=>"Pendiente", "type"=>"Simple", "begin_time"=>"", "end_time"=>"", "percentage"=>"", "priority"=>"1"}, "commit"=>"Crear Tarea", "list_id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (8.2ms)[0m  [1m[32mINSERT INTO "tareas" ("list_id", "type", "description", "state", "priority", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["list_id", 1], ["type", "Simple"], ["description", ""], ["state", "Pendiente"], ["priority", 1], ["created_at", 2016-12-12 04:11:45 UTC], ["updated_at", 2016-12-12 04:11:45 UTC]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 20ms (ActiveRecord: 9.7ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:45 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.7ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (6.7ms)
+  Rendered lists/show.html.erb within layouts/application (17.5ms)
+Completed 200 OK in 91ms (Views: 86.4ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/lists/lista-0/tareas" for ::1 at 2016-12-12 01:11:50 -0300
+Processing by TareasController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"0+C6u10KMqxaWCjdTeRcb0T9q+k0dvu7ZPayhB4e3eny5e9BAUQjBMDnxAPjIJw/fiuwswiIDShnzsyyGA+JfQ==", "tarea"=>{"description"=>"", "state"=>"Pendiente", "type"=>"Long", "begin_time"=>"", "end_time"=>"", "percentage"=>"", "priority"=>"1"}, "commit"=>"Crear Tarea", "list_id"=>"lista-0"}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 13ms (ActiveRecord: 0.7ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:11:50 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (10.9ms)
+  Rendered lists/show.html.erb within layouts/application (20.7ms)
+Completed 200 OK in 115ms (Views: 110.8ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/lists/lista-0/tareas/3/edit" for ::1 at 2016-12-12 01:16:20 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"3"}
+  [1m[36mList Load (2.1ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.6ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 3], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (134.7ms)
+Completed 200 OK in 414ms (Views: 366.8ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:16:24 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (1.1ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (13.0ms)
+  Rendered lists/show.html.erb within layouts/application (87.8ms)
+Completed 200 OK in 262ms (Views: 241.1ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/lists/lista-0/tareas/5/edit" for ::1 at 2016-12-12 01:16:25 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (15.5ms)
+Completed 200 OK in 122ms (Views: 110.7ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/lists/lista-0/tareas/5/edit" for ::1 at 2016-12-12 01:17:03 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (1.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.4ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (24.2ms)
+Completed 200 OK in 203ms (Views: 160.3ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/lists/lista-0/tareas/5/edit" for ::1 at 2016-12-12 01:17:08 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (12.1ms)
+Completed 200 OK in 103ms (Views: 97.1ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/lists/lista-0/tareas/5/edit" for ::1 at 2016-12-12 01:18:11 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 129ms (Views: 120.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:18:13 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.5ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (34.3ms)
+  Rendered lists/show.html.erb within layouts/application (47.3ms)
+Completed 200 OK in 142ms (Views: 121.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/lists/lista-0/tareas/6/edit" for ::1 at 2016-12-12 01:18:17 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"6"}
+  [1m[36mList Load (1.8ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 6], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (16.3ms)
+Completed 200 OK in 136ms (Views: 123.1ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/lists/lista-0/tareas/6/edit" for ::1 at 2016-12-12 01:19:14 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"6"}
+  [1m[36mList Load (1.6ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.5ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 6], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (126.6ms)
+Completed 200 OK in 767ms (Views: 640.3ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/lists/lista-0/tareas/6/edit" for ::1 at 2016-12-12 01:19:15 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"6"}
+  [1m[36mList Load (0.4ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 6], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (12.3ms)
+Completed 200 OK in 128ms (Views: 117.6ms | ActiveRecord: 0.7ms)
+
+
+Started PUT "/lists/lista-0/tareas/6" for ::1 at 2016-12-12 01:19:20 -0300
+Processing by TareasController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+NnASLpVAnZCkkyO2wAkyTo2V6PtX6klnbt6ubRWBdvZ3JWy5hsT3tgtoFB1xOSZAOBM+dGhX7aegwSPskdRTw==", "#<Long:0x007fdbc1842638>"=>"", "tarea"=>{"description"=>"soy larga", "priority"=>"1", "state"=>"Pendiente", "percentage"=>"99"}, "commit"=>"Actualizar Long", "list_id"=>"lista-0", "id"=>"6"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 6], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "tareas" SET "percentage" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["percentage", 99], ["updated_at", 2016-12-12 04:19:20 UTC], ["id", 6]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 16ms (ActiveRecord: 2.0ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:19:20 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.9ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (13.3ms)
+  Rendered lists/show.html.erb within layouts/application (53.6ms)
+Completed 200 OK in 138ms (Views: 131.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/lists/lista-0/tareas/5/edit" for ::1 at 2016-12-12 01:19:22 -0300
+Processing by TareasController#edit as HTML
+  Parameters: {"list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (1.7ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  Rendering tareas/edit.html.erb within layouts/application
+  Rendered tareas/edit.html.erb within layouts/application (14.6ms)
+Completed 200 OK in 116ms (Views: 98.8ms | ActiveRecord: 1.9ms)
+
+
+Started PUT "/lists/lista-0/tareas/5" for ::1 at 2016-12-12 01:19:26 -0300
+Processing by TareasController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"yDoOx3hJWoiZ9IMDnnfBXS2jSanpxT+1PCFY+Mswzeocko3cCjSFGXhIeEPgJlH7Rxwj/nDy4Vg/Dn6f8xcA/w==", "#<Long:0x007fdbc5bfaba0>"=>"", "tarea"=>{"description"=>"soy larga", "priority"=>"2", "state"=>"Pendiente", "percentage"=>"21"}, "commit"=>"Actualizar Long", "list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (0.9ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.6ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "tareas" SET "priority" = ?, "percentage" = ?, "updated_at" = ? WHERE "tareas"."id" = ?[0m  [["priority", 2], ["percentage", 21], ["updated_at", 2016-12-12 04:19:26 UTC], ["id", 5]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 21ms (ActiveRecord: 4.5ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:19:26 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.7ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (9.8ms)
+  Rendered lists/show.html.erb within layouts/application (29.9ms)
+Completed 200 OK in 103ms (Views: 96.2ms | ActiveRecord: 0.9ms)
+
+
+Started DELETE "/lists/lista-0/tareas/5" for ::1 at 2016-12-12 01:19:34 -0300
+Processing by TareasController#destroy as HTML
+  Parameters: {"authenticity_token"=>"voQ8j9L94gE80F/FPXdPyuH3ZHDAV6P2wTVOdqrGvSCfgWl1jrPzqaZvsxuTs4+a2yF/KvypVWXCDTBArNfptA==", "list_id"=>"lista-0", "id"=>"5"}
+  [1m[36mList Load (0.3ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  [1m[36mTarea Load (0.3ms)[0m  [1m[34mSELECT  "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? AND "tareas"."id" = ? LIMIT ?[0m  [["list_id", 1], ["id", 5], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "tareas" WHERE "tareas"."type" IN ('Long') AND "tareas"."id" = ?[0m  [["id", 5]]
+  [1m[35m (8.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/lists/lista-0
+Completed 302 Found in 17ms (ActiveRecord: 9.1ms)
+
+
+Started GET "/lists/lista-0" for ::1 at 2016-12-12 01:19:34 -0300
+Processing by ListsController#show as HTML
+  Parameters: {"id"=>"lista-0"}
+  [1m[36mList Load (0.2ms)[0m  [1m[34mSELECT  "lists".* FROM "lists" WHERE "lists"."slug" = ? ORDER BY "lists"."id" ASC LIMIT ?[0m  [["slug", "lista-0"], ["LIMIT", 1]]
+  Rendering lists/show.html.erb within layouts/application
+  [1m[36mTarea Load (0.2ms)[0m  [1m[34mSELECT "tareas".* FROM "tareas" WHERE "tareas"."list_id" = ? ORDER BY "tareas"."priority" ASC[0m  [["list_id", 1]]
+  Rendered tareas/_form.html.erb (8.0ms)
+  Rendered lists/show.html.erb within layouts/application (28.6ms)
+Completed 200 OK in 127ms (Views: 122.6ms | ActiveRecord: 0.5ms)
+
+
